@@ -92,13 +92,6 @@ function App() {
     setChatHistory([]);
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      getResponse();
-    }
-  };
-
   return (
     <div className="app">
       <div className="chat-container">
@@ -129,7 +122,6 @@ function App() {
             value={value}
             placeholder="Type something!"
             onChange={(e) => setValue(e.target.value)}
-            onKeyPress={handleKeyPress}
             className="chat-input"
           />
           
