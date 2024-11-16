@@ -49,7 +49,7 @@ function App() {
       return;
     }
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'https://your-netlify-site.netlify.app';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://chatxbot.netlify.app';
       const options = {
         method: 'POST',
         body: JSON.stringify({
