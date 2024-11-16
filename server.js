@@ -48,7 +48,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
     // For development, you might want to handle CORS differently
     app.use(cors({
-        origin: 'http://localhost:3000', // Assuming your React app runs on port 3000
+        origin: 'http://chatxbot.netlify.app', // Assuming your React app runs on port 3000
         credentials: true
     }));
 }
