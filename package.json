@@ -15,8 +15,7 @@
     "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "serverless-http": "^3.1.1"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start:frontend": "react-scripts start",
@@ -24,8 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "proxy": "http://localhost:8000",
-    "dev": "netlify dev"
+    "proxy": "http://localhost:8000"
   },
   "eslintConfig": {
     "extends": [
@@ -46,7 +44,6 @@
     ]
   },
   "devDependencies": {
-    "@netlify/cli": "^12.0.11",
     "nodemon": "^2.0.22"
   },
   "engines": {
