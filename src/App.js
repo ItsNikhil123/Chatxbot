@@ -49,7 +49,7 @@ function App() {
       return;
     }
     try {
-      const API_URL = process.env.MY_URL || 'https://chatxbot.netlify.app';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://your-netlify-site.netlify.app';
       const options = {
         method: 'POST',
         body: JSON.stringify({
@@ -60,10 +60,9 @@ function App() {
           'Content-Type': 'application/json'
         }
       };
-      const response = await fetch(`${API_URL}/gemini`, options);
+      const response = await fetch(`${API_URL}/api/gemini`, options);
       const data = await response.text();
       const output = formatServerResponse(data);
-      console.log(output);
       setChatHistory(oldChatHistory => [
         ...oldChatHistory,
         {
