@@ -36,21 +36,43 @@ app.post('/gemini', async (req, res) => {
     }
 });
 
+// Security headers middleware
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    next();
+});
+
 // Serve static files from the public directory
 if (process.env.NODE_ENV === 'production') {
     // Serve static files
     app.use(express.static(path.join(__dirname, 'public')));
+
+    // CORS configuration for production
+    app.use(cors({
+        origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : 'https://chatxbot.netlify.app',
+        methods: ['GET', 'POST'],
+        credentials: true,
+        maxAge: 86400 // CORS preflight cache for 24 hours
+    }));
 
     // Handle any requests that don't match the above
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
     });
 } else {
-    // For development, you might want to handle CORS differently
+    // Development CORS settings
     app.use(cors({
-        origin: 'http://chatxbot.netlify.app', // Assuming your React app runs on port 3000
+        origin: 'http://localhost:3000',
         credentials: true
     }));
 }
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something broke!' });
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
