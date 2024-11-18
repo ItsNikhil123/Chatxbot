@@ -18,7 +18,6 @@ function App() {
     const randomnum = surprizeOptions[Math.floor(Math.random() * surprizeOptions.length)];
     setValue(randomnum);
   };
-
   const formatServerResponse = (data) => {
     if (!data) return '';
   
@@ -28,18 +27,24 @@ function App() {
       : JSON.stringify(data);
   
     return stringResponse
+      // Remove extra whitespace
       .replace(/\s+/g, ' ')
+      // Replace HTML entities
       .replace(/&nbsp;/g, ' ')
       .replace(/&amp;/g, '&')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '')
+      // Remove HTML tags
       .replace(/<[^>]*>/g, '')
+      // Fix common formatting issues
       .replace(/\\n/g, '\n')
       .replace(/\\""/g, '\n')
       .replace(/\\"/g, '\n')
       .replace(/\\|\s*\n\s*/g, '\n')
+      // Remove multiple spaces
       .replace(/\s{2,}/g, ' ')
+      // Trim leading/trailing whitespace
       .trim();
   };
 
@@ -49,7 +54,6 @@ function App() {
       return;
     }
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'https://chatxbot.netlify.app';
       const options = {
         method: 'POST',
         body: JSON.stringify({
@@ -60,9 +64,10 @@ function App() {
           'Content-Type': 'application/json'
         }
       };
-      const response = await fetch(`${API_URL}/api/gemini`, options);
-      const data = await response.text();
-      const output = formatServerResponse(data);
+      const response = await fetch('http://localhost:8000/gemini', options);
+      const data = await response.text()
+      const output = formatServerResponse(data)
+      console.log(output);
       setChatHistory(oldChatHistory => [
         ...oldChatHistory,
         {
